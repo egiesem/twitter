@@ -18,7 +18,7 @@
                 <div class="list-status">
                     <div v-for="(post) in StatusDatas" :key="post.id" :class=" post.id_user == curentId ? 'right' : 'left' ">
                         <div class="img">
-                            <img src="user.png" alt="">
+                            <img :src="currentImg && post.id_user == curentId ? currentImg : 'user.png'" alt="">
                         </div>
                         <div class="text">
                             <div class="user">{{post.name}}</div>
@@ -45,6 +45,7 @@ export default {
             status:'',
         },
         curentId: '',
+        currentImg: null,
         StatusDatas: {},
         errors: [],
         base_url: window.location.origin
@@ -102,7 +103,9 @@ export default {
         axios.get('/get-current-user')
             .then(response => {
                 this.curentId = response.data.id
+                this.currentImg = response.data.image
                 console.log(this.curentId)
+                console.log('ini loh', this.currentImg)
             })
     },
 
